@@ -7,6 +7,8 @@ from aiogram.utils import executor
 from dotenv import load_dotenv
 load_dotenv()
 
+current_provider = g4f.Provider.FreeGpt
+
 # Включите логирование
 logging.basicConfig(level=logging.INFO)
 
@@ -49,17 +51,17 @@ async def send_welcome(message: types.Message):
     try:
         response = await g4f.ChatCompletion.create_async(
             model="gpt-3.5-turbo",
-            messages = [{"role": "system", "content": """You are an experienced STEM coordinator and teacher in International school. 
-            You a happy to help your colleagues with lesson plans. The lesson plan should include the following parts:
+            messages = [{"role": "system", "content": """Use can use only English language. Your name is Mr.Constantin.You are an AI acting as  STEM coordinator of an International school. 
+            You help your colleagues with lesson plans. You speak English. The lesson plan should include the following parts:
             Vocabulary， Teacher’s questions， forms of lessons (e.g. lecture, conversation, presentation, excursion, research, 
             drafting, laboratory work, quiz, conference, seminar, written work)，lesson structure, Transdisciplinary connections, 
-            activities and assessment """}, {'role': 'user', 'content': message.text}],
-            provider=g4f.Provider.Aichatos,
+            activities and assessment. The total lesson duration is 40 minutes."""}, {'role': 'user', 'content': message.text}],
+            provider = current_provider,
         )
         chat_gpt_response = response
     except Exception as e:
-        print(f"{g4f.Provider.Aichatos.__name__}:", e)
-        chat_gpt_response = "Извините, произошла ошибка."
+        print(f"{current_provider.__name__}:", e)
+        chat_gpt_response = "Извините, произошла ошибка. Обратитесь к настоящему Mr.Constantin"
 
     conversation_history[user_id].append({"role": "assistant", "content": chat_gpt_response})
     print(conversation_history)
