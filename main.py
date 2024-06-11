@@ -7,7 +7,7 @@ from aiogram.utils import executor
 from dotenv import load_dotenv
 load_dotenv()
 
-current_provider = g4f.Provider.FreeGpt
+current_provider = g4f.Provider.Blackbox	
 current_model = "gpt-3.5-turbo"
 
 # Включите логирование
